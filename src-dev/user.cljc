@@ -28,18 +28,12 @@
   (type 1)
   )
 
-#?(:cljs (defn runtime-resolve [exported-qualified-sym]
-           (let [path-s        (str (munge (symbol (namespace exported-qualified-sym)))
-                                    "." (munge (name exported-qualified-sym)))
-                 path-segments (clojure.string/split path-s ".")]
-             (goog.object/getValueByKeys js/window (clj->js path-segments)))))
-
-#?(:cljs (defonce user-photon-main `user.demo-healthcheck/main)) ; lazy resolve
+#?(:cljs (defonce user-photon-main user.demo-healthcheck/main)) ; lazy resolve
 #?(:cljs (defonce reactor nil))                             ; save for debugging
 
 (defn ^:dev/after-load ^:export start! []
   #?(:cljs (when user-photon-main
-             (set! reactor ((runtime-resolve user-photon-main) ; Photon main recompiles every reload, must re-resolve it
+             (set! reactor (user-photon-main ; Photon main recompiles every reload, must re-resolve it
                             #(js/console.log "Reactor success:" %)
                             #(js/console.error "Reactor failure:" %))))))
 
@@ -51,7 +45,7 @@
            ; Save the user the trouble of getting a CLJS repl to switch photon entrypoints
            (let [cljs-eval @(requiring-resolve 'shadow.cljs.devtools.api/cljs-eval)]
              (cljs-eval :devkit (str `(println ::loading (quote ~photon-main-sym))) {})
-             (cljs-eval :devkit (str `(browser-main! (quote ~photon-main-sym))) {})
+             (cljs-eval :devkit (str `(browser-main! ~photon-main-sym)) prn {})
              (fn dispose [] (cljs-eval :devkit `(user/stop!) {}))))
 
    :cljs (defn browser-main! [photon-main-sym]
