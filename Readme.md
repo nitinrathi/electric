@@ -28,7 +28,8 @@ clj -A:dev -X user/main     # healthcheck app http://localhost:8080
 ```
 
 * `dev` alias
-* `(user/main)` compiles assets and serves app
+* `(user/main)` compiles assets and serves demo app
+* prod demo entrypoint: `clojure -A:dev -X prod/main` (compiles photon at runtime, fixme)
 
 # Examples
 * see [src-docs/user/](https://github.com/hyperfiddle/photon/tree/master/src-docs/user) for demos and tutorials

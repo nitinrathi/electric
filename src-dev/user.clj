@@ -74,7 +74,7 @@
     ; install test globals, which can be different
     (require 'test)
     (eval '(test/install-test-state))
-    (catch java.io.FileNotFoundException _ "no datomic on classpath"))
+    (catch Exception _ "no datomic on classpath"))
 
   ; enable RCF after Datomic is loaded – to resolve circular dependency
   (@rcf-enable!))
