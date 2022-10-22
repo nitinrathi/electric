@@ -1,4 +1,5 @@
-{:paths   ["src"]
+{:paths   ["src"
+           "resources"] ; for uberjar
  :deps    {org.clojure/clojure            {:mvn/version "1.11.1"}
            missionary/missionary          {:mvn/version "b.27-SNAPSHOT"}
            com.hyperfiddle/rcf            {:mvn/version "20220926-202227"}
@@ -61,6 +62,18 @@
                                    io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
                                                                          :sha     "cc75980b43011773162b485f46f939dc5fba91e4"}}
                      :exec-fn     cognitect.test-runner.api/test}
+
+           ;; demos with bundled library, combine with :dev:scratch
+           ;:demo-uberjar {:extra-deps {io.github.clojure/tools.build {:git/tag "v0.8.2" :git/sha "ba1a2bf"}
+           ;                            io.github.seancorfield/build-clj {:git/tag "v0.8.0" :git/sha "9bd8b8a"}
+           ;                            thheller/shadow-cljs {:mvn/version "2.20.1"}
+           ;                            uberdeps/uberdeps {:mvn/version "1.1.4" #_"0.1.8"}} ; todo 1.1.4 crashes on --alias
+           ;               :extra-paths ["deploy"]
+           ;               :ns-default build-demo
+           ;               :exec-fn    prod/build
+           ;               :exec-args  {}
+           ;               #_#_:main-opts ["-m" "uberdeps.uberjar" "--aliases" "dev:scratch"]}
+
            :scratch {:extra-paths []
                      :extra-deps {com.datomic/dev-local {:mvn/version "1.0.243"}
                                   ; fix datomic/shadow conflict
