@@ -3,7 +3,7 @@
   (:require clojure.string
             goog.object
             hyperfiddle.photon
-            hyperfiddle.photon-dom-test
+            ;hyperfiddle.photon-dom-test -- todo, this breaks prod container
             hyperfiddle.rcf
             user-main)
   (:require-macros [user :refer [get-main]]))
